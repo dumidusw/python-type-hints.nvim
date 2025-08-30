@@ -1,0 +1,15 @@
+# Lua bytecode
+*.luac
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor/IDE junk
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# Logs (if you later add logging)
+*.log
