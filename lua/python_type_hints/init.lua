@@ -1,12 +1,9 @@
 -- lua/python_type_hints/init.lua
--- Entry point for python-type-hints.nvim
+local M = {}
 
-local cmp_ok, cmp = pcall(require, "cmp")
-if not cmp_ok then
-	vim.notify("[python-type-hints] nvim-cmp is not installed", vim.log.levels.WARN)
-	return
+function M.setup()
+	vim.notify("[python-type-hints.nvim] setup called", vim.log.levels.INFO)
+	-- later we can add config options here
 end
 
-local source = require("python_type_hints.source")
-
-cmp.register_source("python_type_hints", source)
+return M
