@@ -1,62 +1,50 @@
--- lua/python_type_hints/source.lua
--- nvim-cmp source for Python type hints
+local cmp = require("cmp")
+local ts_utils = require("nvim-treesitter.ts_utils")
+local log = require("configs.cmp_sources.logger") -- optional for debugging
+local patterns = require("python_type_hints.patterns")
+local ctx = require("python_type_hints.context")
 
-local ts_utils = vim.treesitter
-local snippets = require("python_type_hints.snippets")
+local M = {}
 
-local source = {}
+M.new = function()
+	return {
+		is_available = function()
+			return vim.bo.filetype == "python"
+		end,
 
--- Called when cmp needs completion items
-function source:complete(_, callback)
-	local bufnr = vim.api.nvim_get_current_buf()
-	local ft = vim.bo[bufnr].filetype
+		get_trigger_characters = function()
+			return { ":", ">" }
+		end,
 
-	if ft ~= "python" then
-		return callback()
-	end
+		complete = function(self, params, callback)
+			local is_valid, name, context_type = ctx.is_valid_type_context()
+			if not is_valid then
+				return callback({ items = {}, isIncomplete = false })
+			end
 
-	-- Get node under cursor
-	local parser = ts_utils.get_parser(bufnr, "python")
-	if not parser then
-		return callback()
-	end
+			local suggestions = patterns.get_type_suggestions(name, context_type)
+			local items = {}
+			for i, typ in ipairs(suggestions) do
+				local detail = context_type == "return" and ("Return type for: " .. (name or "function"))
+					or ("Parameter type for: " .. (name or "parameter"))
 
-	local tree = parser:parse()[1]
-	if not tree then
-		return callback()
-	end
+				local doc_context = context_type == "return"
+						and string.format("```python\ndef %s(...) -> %s:\n    ...\n```", name or "function", typ)
+					or string.format("```python\n%s: %s\n```", name or "param", typ)
 
-	local cursor_row, cursor_col = unpack(vim.api.nvim_win_get_cursor(0))
-	cursor_row = cursor_row - 1
+				table.insert(items, {
+					label = typ,
+					kind = cmp.lsp.CompletionItemKind.TypeParameter,
+					detail = detail,
+					documentation = { kind = cmp.lsp.MarkupKind.Markdown, value = doc_context },
+					sortText = string.format("%02d_%s", i, typ),
+					insertText = typ,
+				})
+			end
 
-	local root = tree:root()
-	local node = root:named_descendant_for_range(cursor_row, cursor_col, cursor_row, cursor_col)
-	if not node then
-		return callback()
-	end
-
-	-- Only trigger inside function params or variable annotations
-	local node_type = node:type()
-	if node_type ~= "typed_parameter" and node_type ~= "function_definition" and node_type ~= "variable_annotation" then
-		return callback()
-	end
-
-	-- Return snippets as completion items
-	local items = {}
-	for _, s in ipairs(snippets) do
-		table.insert(items, {
-			label = s,
-			insertText = s,
-			kind = vim.lsp.protocol.CompletionItemKind.Keyword,
-		})
-	end
-
-	callback({ items = items, isIncomplete = false })
+			callback({ items = items, isIncomplete = false })
+		end,
+	}
 end
 
--- Required cmp metadata
-function source:get_debug_name()
-	return "python_type_hints"
-end
-
-return source
+return M

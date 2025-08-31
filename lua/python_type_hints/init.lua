@@ -1,38 +1,18 @@
 local M = {}
 
 M.setup = function()
-	-- Minimal log to confirm setup
-	vim.notify("[python-type-hints.nvim] setup called")
+	local ls = require("luasnip")
 
-	-- Register dummy cmp source
-	local has_cmp, cmp = pcall(require, "cmp")
-	if not has_cmp then
-		vim.notify("[python-type-hints.nvim] nvim-cmp not found!", vim.log.levels.WARN)
-		return
-	end
+	-- Load snippets
+	local snippets = require("python_type_hints.snippets")
+	ls.add_snippets("python", snippets)
 
-	local source = {}
-	source.new = function()
-		return {
-			is_available = function()
-				return vim.bo.filetype == "python"
-			end,
-			get_trigger_characters = function()
-				return { ":", ">" }
-			end,
-			complete = function(self, params, callback)
-				callback({
-					items = {
-						{ label = "int", kind = cmp.lsp.CompletionItemKind.TypeParameter },
-						{ label = "str", kind = cmp.lsp.CompletionItemKind.TypeParameter },
-					},
-					isIncomplete = false,
-				})
-			end,
-		}
-	end
+	-- Load and register CMP source
+	local cmp = require("cmp")
+	local python_type_source = require("python_type_hints.source")
+	cmp.register_source("python_types", python_type_source.new())
 
-	cmp.register_source("python_types", source.new())
+	print("[python-type-hints.nvim] setup called")
 end
 
 return M
