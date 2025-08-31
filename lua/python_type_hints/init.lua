@@ -1,18 +1,29 @@
+-- lua/python_type_hints/init.lua
 local M = {}
 
-M.setup = function()
-	local ls = require("luasnip")
+M.options = {
+	enable_snippets = true,
+	enable_logger = false,
+}
 
-	-- Load snippets
-	local snippets = require("python_type_hints.snippets")
-	ls.add_snippets("python", snippets)
+function M.setup(opts)
+	M.options = vim.tbl_extend("force", M.options, opts or {})
 
-	-- Load and register CMP source
-	local cmp = require("cmp")
-	local python_type_source = require("python_type_hints.source")
-	cmp.register_source("python_types", python_type_source.new())
+	-- Enable logger if requested
+	if M.options.enable_logger then
+		require("python_type_hints.logger").enable()
+	end
 
-	print("[python-type-hints.nvim] setup called")
+	-- Register cmp source
+	local source = require("python_type_hints.source")
+	require("cmp").register_source("python_types", source.new())
+
+	-- Load snippets if enabled
+	if M.options.enable_snippets then
+		local snippets = require("python_type_hints.snippets").snippets
+		local ls = require("luasnip")
+		ls.add_snippets("python", snippets)
+	end
 end
 
 return M

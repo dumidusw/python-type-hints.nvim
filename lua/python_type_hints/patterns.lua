@@ -1,34 +1,100 @@
+-- lua/python_type_hints/patterns.lua
+-- Type suggestion patterns based on variable/function names
+
 local M = {}
 
--- Parameter type suggestions
-M.type_suggestions = {
-	parameter = {
-		str = { "str" },
-		int = { "int" },
-		float = { "float" },
-		bool = { "bool" },
-		list = { "list" },
-		dict = { "dict" },
-		any = { "Any" },
+M.type_mappings = {
+	exact = {
+		users_data = { "list[dict[str, Any]]", "UsersPayload", "pd.DataFrame", "Optional[list[User]]" },
+		user_data = { "dict[str, Any]", "User", "UserData" },
+		users = { "list[User]", "list[dict[str, Any]]", "Sequence[User]" },
+		user = { "User", "dict[str, Any]", "Optional[User]" },
+		df = { "pd.DataFrame", "Optional[pd.DataFrame]" },
+		dataframe = { "pd.DataFrame", "polars.DataFrame" },
+		data = { "dict[str, Any]", "list[dict[str, Any]]", "pd.DataFrame", "Any" },
+		payload = { "dict[str, Any]", "Payload", "list[dict[str, Any]]" },
+		response = { "dict[str, Any]", "Response", "requests.Response" },
+		request = { "Request", "dict[str, Any]", "httpx.Request" },
+		config = { "dict[str, Any]", "Config", "Settings" },
+		settings = { "Settings", "dict[str, Any]", "Config" },
+		options = { "dict[str, Any]", "Options", "Optional[dict[str, Any]]" },
+		params = { "dict[str, Any]", "Params", "Optional[dict[str, Any]]" },
 	},
-	return_type = {
-		str = { "str" },
-		int = { "int" },
-		float = { "float" },
-		bool = { "bool" },
-		list = { "list" },
-		dict = { "dict" },
-		any = { "Any" },
+	patterns = {
+		[".*_id$"] = { "int", "str", "Optional[int]", "Optional[str]", "UUID" },
+		[".*_ids$"] = { "list[int]", "list[str]", "Sequence[int]", "set[int]" },
+		[".*_list$"] = { "list[dict[str, Any]]", "list[T]", "Sequence[T]" },
+		[".*_data$"] = { "dict[str, Any]", "list[dict[str, Any]]", "pd.DataFrame" },
+		[".*_path$"] = { "str", "Path", "Optional[Path]" },
+		[".*_file$"] = { "str", "Path", "TextIO", "BinaryIO" },
+		[".*_url$"] = { "str", "URL", "Optional[str]" },
+		[".*_name$"] = { "str", "Optional[str]" },
+		[".*_email$"] = { "str", "EmailStr", "Optional[str]" },
+		[".*_date$"] = { "datetime", "date", "Optional[datetime]", "str" },
+		[".*_time$"] = { "datetime", "time", "Optional[datetime]", "str" },
+		[".*_count$"] = { "int", "Optional[int]" },
+		[".*_size$"] = { "int", "Optional[int]" },
+		[".*_length$"] = { "int", "Optional[int]" },
+		[".*_items$"] = { "list[dict[str, Any]]", "list[T]", "Sequence[T]" },
+		[".*_results$"] = { "list[dict[str, Any]]", "list[T]", "pd.DataFrame" },
+	},
+	fallbacks = {
+		"dict[str, Any]",
+		"list[dict[str, Any]]",
+		"Optional[dict[str, Any]]",
+		"Any",
+		"str",
+		"int",
+		"bool",
+		"float",
 	},
 }
 
--- Helper to get suggestions dynamically
-function M.get_type_suggestions(name, context_type)
-	if context_type == "return" then
-		return M.type_suggestions.return_type[name] or { "Any" }
-	else
-		return M.type_suggestions.parameter[name] or { "Any" }
-	end
-end
+M.return_type_mappings = {
+	exact = {
+		get_user = { "Optional[User]", "dict[str, Any]", "User" },
+		get_users = { "list[User]", "list[dict[str, Any]]", "pd.DataFrame" },
+		process_data = { "dict[str, Any]", "list[dict[str, Any]]", "pd.DataFrame" },
+		fetch_data = { "dict[str, Any]", "list[dict[str, Any]]", "requests.Response" },
+		validate_data = { "bool", "tuple[bool, str]", "ValidationResult" },
+		parse_config = { "dict[str, Any]", "Config", "Settings" },
+		load_config = { "dict[str, Any]", "Config", "Settings" },
+		save_data = { "bool", "None", "int" },
+		create_user = { "User", "dict[str, Any]", "int" },
+		update_user = { "bool", "User", "dict[str, Any]" },
+		delete_user = { "bool", "None" },
+	},
+	patterns = {
+		["^get_.*"] = { "Optional[dict[str, Any]]", "dict[str, Any]", "list[dict[str, Any]]" },
+		["^fetch_.*"] = { "dict[str, Any]", "list[dict[str, Any]]", "requests.Response" },
+		["^load_.*"] = { "dict[str, Any]", "Optional[dict[str, Any]]", "Any" },
+		["^save_.*"] = { "bool", "None", "int" },
+		["^create_.*"] = { "dict[str, Any]", "int", "bool" },
+		["^update_.*"] = { "bool", "dict[str, Any]", "None" },
+		["^delete_.*"] = { "bool", "None" },
+		["^remove_.*"] = { "bool", "None" },
+		["^validate_.*"] = { "bool", "tuple[bool, str]", "ValidationResult" },
+		["^parse_.*"] = { "dict[str, Any]", "list[dict[str, Any]]", "Any" },
+		["^process_.*"] = { "dict[str, Any]", "list[dict[str, Any]]", "pd.DataFrame" },
+		["^calculate_.*"] = { "float", "int", "dict[str, Any]" },
+		["^count_.*"] = { "int", "dict[str, int]" },
+		["^find_.*"] = { "Optional[dict[str, Any]]", "list[dict[str, Any]]" },
+		["^search_.*"] = { "list[dict[str, Any]]", "dict[str, Any]", "pd.DataFrame" },
+		["^is_.*"] = { "bool" },
+		["^has_.*"] = { "bool" },
+		["^can_.*"] = { "bool" },
+		[".*_exists$"] = { "bool" },
+	},
+	fallbacks = {
+		"None",
+		"dict[str, Any]",
+		"list[dict[str, Any]]",
+		"Optional[dict[str, Any]]",
+		"bool",
+		"int",
+		"str",
+		"Any",
+	},
+}
 
 return M
