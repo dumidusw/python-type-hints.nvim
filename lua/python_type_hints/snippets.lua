@@ -1,8 +1,18 @@
-local ls = require("luasnip")
+-- lua/python_type_hints/snippets.lua
+-- Holds reusable type hint snippets
 
-ls.add_snippets("python", {
-	ls.parser.parse_snippet("list", "list[$1]"),
-	ls.parser.parse_snippet("dict", "dict[$1, $2]"),
-	ls.parser.parse_snippet("tuple", "tuple[$1]"),
-	ls.parser.parse_snippet("optional", "Optional[$1]"),
-})
+local snippets = {
+	"int",
+	"float",
+	"str",
+	"bool",
+	"list",
+	"dict",
+	"set",
+	"tuple",
+	"Optional",
+	"Union",
+	"Any",
+}
+
+return snippets
