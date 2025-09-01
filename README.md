@@ -103,3 +103,39 @@ Trigger these in a type context with `<Tab>`:
 | `none` | `None` |
 | `union` | `Union[T, U]` |
 | `callable` | `Callable[[...], ...]` |
+
+> Snippets are auto-loaded if enable_snippets = true.
+
+
+## Configuration
+
+All options (with defaults):
+
+```lua
+require("python_type_hints").setup({
+  enable_snippets = true,  -- Load built-in LuaSnip snippets
+  enable_logger = false,   -- Print debug logs to :messages
+})
+```
+
+Or use opts in Lazy.nvim as shown above.
+
+## Debugging
+
+Enable logging to troubleshoot:
+
+```lua
+opts = {
+  enable_logger = true,
+}
+```
+
+Then check logs with:
+
+```
+:messages
+```
+
+Look for [py-hints] entries.
+
+
