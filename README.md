@@ -1,2 +1,2 @@
 # python-type-hints.nvim
-A context-aware Python type completion that provides Python type hint completions
+A Neovim plugin that provides context-aware Python type completions
