@@ -79,11 +79,11 @@ Using Lazy.nvim (recommended)
 
 ## Usage Examples
 
-```markdown
+
 | You Type | Suggested Types |
 |----------|-----------------|
 | `users_` | `list[dict[str, Any]]`, `pd.DataFrame`, `UsersPayload` |
 | `user_id:` | `int`, `str`, `Optional[int]` |
 | `config:` | `dict[str, Any]`, `Config`, `Settings` |
 | `->` after `get_user()` | `Optional[User]`, `dict[str, Any]` |
-```
+
