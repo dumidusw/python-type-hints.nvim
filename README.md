@@ -4,6 +4,7 @@ A Neovim plugin that provides context-aware Python type completions
 > Suggests relevant type annotations based on **parameter names**, **function names**, and **context** — no LSP required.
 
 ✨ What It Does
+
 When you type:
 
 ```python
