@@ -158,4 +158,4 @@ Thanks to the Neovim community for support and feedback.
 
 
 ## 🌟 Star It If You Like It!
-If this plugin saves you time, please kindly consider giving this a ⭐ because your action helps more people discover this!
+If this plugin saves you time, please kindly consider giving this a ⭐ because your action helps more people discover this plugin!
