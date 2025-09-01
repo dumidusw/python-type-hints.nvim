@@ -5,6 +5,8 @@ A Neovim plugin that provides context-aware Python type completions
 
 ✨ What It Does
 
+Example
+
 When you type:
 
 ```python
@@ -19,3 +21,46 @@ UsersPayload
 pd.DataFrame
 Optional[list[User]]
 ```
+
+When you type:
+
+def get_user(user_id: int) -> 
+
+→ It suggests:
+
+```
+Optional[User]
+dict[str, Any]
+User
+```
+
+All automatically, based on naming patterns and context.
+
+Features
+✅ Smart type suggestions based on variable/function names
+✅ Parameter vs return type context detection
+✅ Works offline — no LSP or AI needed
+✅ LuaSnip integration for manual expansion (e.g. ldda<Tab>)
+✅ Rich documentation in completion menu (with code examples)
+✅ Tree-sitter + regex parsing for accurate context detection
+✅ Configurable and lightweight
+
+## Installation
+Using Lazy.nvim (recommended)
+
+```lua
+{
+  "dumidusw/python-type-hints.nvim",
+  ft = "python",
+  opts = {
+    enable_snippets = true,  -- Load LuaSnip snippets (default: true)
+    enable_logger = false,   -- Enable debug logs (default: false)
+  },
+  dependencies = {
+    "hrsh7th/nvim-cmp",
+    "L3MON4D3/LuaSnip",
+    "nvim-treesitter/nvim-treesitter", -- for context parsing
+  },
+}
+```
+
