@@ -37,12 +37,19 @@ User
 All automatically, based on naming patterns and context.
 
 Features
+
 ✅ Smart type suggestions based on variable/function names
+
 ✅ Parameter vs return type context detection
+
 ✅ Works offline — no LSP or AI needed
+
 ✅ LuaSnip integration for manual expansion (e.g. ldda<Tab>)
+
 ✅ Rich documentation in completion menu (with code examples)
+
 ✅ Tree-sitter + regex parsing for accurate context detection
+
 ✅ Configurable and lightweight
 
 ## Installation
