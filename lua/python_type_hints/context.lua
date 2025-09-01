@@ -58,7 +58,8 @@ function M.get_context()
 
 	-- Return type: def func() -> |
 	if before_cursor:match("%-%>%s*$") then
-		local func_name = before_cursor:match("def%s+([%w_]+)%(.*%)%s*%-%>%s*$")
+		-- local func_name = before_cursor:match("def%s+([%w_]+)%(.*%)%s*%-%>%s*$")
+		local func_name = before_cursor:match("def%s+([%w_]+)%b()%s*%-%>%s*$")
 		return func_name or "unnamed", "return"
 	end
 
