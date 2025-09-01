@@ -9,9 +9,14 @@ M.options = {
 function M.setup(opts)
 	M.options = vim.tbl_extend("force", M.options, opts or {})
 
+	-- 🔍 Debug: Print full opts
+	print("🔧 python-type-hints.nvim opts:", vim.inspect(M.options))
+
 	-- Enable logger if requested
 	if M.options.enable_logger then
+		print("🎯 Enabling logger...") -- Temporary debug
 		require("python_type_hints.logger").enable()
+		print("✅ Logger should now be enabled")
 	end
 
 	-- Register cmp source
@@ -23,6 +28,7 @@ function M.setup(opts)
 		local snippets = require("python_type_hints.snippets").snippets
 		local ls = require("luasnip")
 		ls.add_snippets("python", snippets)
+		print("📎 Snippets loaded") -- Confirm snippets
 	end
 end
 
