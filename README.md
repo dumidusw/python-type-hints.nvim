@@ -87,3 +87,19 @@ Using Lazy.nvim (recommended)
 | `config:` | `dict[str, Any]`, `Config`, `Settings` |
 | `->` after `get_user()` | `Optional[User]`, `dict[str, Any]` |
 
+## Snippets (Optional)
+
+Trigger these in a type context with `<Tab>`:
+
+| Trigger | Expands To |
+|--------|------------|
+| `ldda` | `list[dict[str, Any]]` |
+| `dsa`  | `dict[str, Any]` |
+| `tldai` | `tuple[list[dict[str, Any]], int]` |
+| `opt`  | `Optional[T]` |
+| `ls`   | `list[str]` |
+| `li`   | `list[int]` |
+| `any`  | `Any` |
+| `none` | `None` |
+| `union` | `Union[T, U]` |
+| `callable` | `Callable[[...], ...]` |
