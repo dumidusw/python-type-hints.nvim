@@ -138,4 +138,13 @@ Then check logs with:
 
 Look for [py-hints] entries.
 
+## Contributing
+PRs welcome! You can:
 
+- Add more type patterns
+
+- Improve context detection
+
+- Add support for custom user rules
+
+- Suggest new snippets
