@@ -36,7 +36,7 @@ User
 
 All automatically, based on naming patterns and context.
 
-Features
+**Features**
 
 ✅ Smart type suggestions based on variable/function names
 
