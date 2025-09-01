@@ -148,3 +148,14 @@ PRs welcome! You can:
 - Add support for custom user rules
 
 - Suggest new snippets
+
+## Demo
+
+## Acknowledgements
+Inspired by real-world Python development workflows.
+
+Thanks to the Neovim community for support and feedback.
+
+
+## 🌟 Star It If You Like It!
+If this plugin saves you time, please kindly consider giving this a ⭐ because your action helps more people discover this!
