@@ -15,6 +15,8 @@ end
 
 function M.enable()
 	M.enabled = true
+	-- ✅ ADD THIS DEBUG LINE
+	print("🟢 python-type-hints.nvim: Logger ENABLED")
 end
 
 function M.disable()
