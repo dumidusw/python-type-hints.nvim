@@ -120,6 +120,38 @@ require("python_type_hints").setup({
 
 Or use opts in Lazy.nvim as shown above.
 
+## 🔗 Integration Tips
+
+If you already manage LuaSnip snippets, avoid duplicates by ensuring your personal snippets (like `ldda`, `opt`) don’t overlap with this plugin's built-in ones.
+
+Recommended:
+
+- ✅ Keep `enable_snippets = true` (default)
+- ✅ Remove any duplicate type snippets from your own files
+
+For reliable loading, place your personal snippet loader in:
+```lua
+	{
+		"dumidusw/python-type-hints.nvim",
+		ft = "python",
+		opts = {
+			enable_snippets = true,
+			enable_logger = false,
+		},
+		config = function(_, opts)
+			require("python_type_hints").setup(opts)
+			-- After plugin loads, load your own snippets
+			local snippet_path = vim.fn.expand("~/.config/nvim/lua/configs/snippets")
+			require("luasnip.loaders.from_lua").load({ paths = { snippet_path } })
+		end,
+		dependencies = {
+			"hrsh7th/nvim-cmp",
+			"L3MON4D3/LuaSnip",
+			"nvim-treesitter/nvim-treesitter",
+		},
+```
+
+
 ## Debugging
 
 Enable logging to troubleshoot:
