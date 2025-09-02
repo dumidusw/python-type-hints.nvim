@@ -15,7 +15,7 @@ Most AI-powered auto-completion tools suggest generic or incorrect types. But yo
 - Typer / Click (CLI)
 - Prefect / Celery (async workflows)
 
-Because in these frameworks, type expectations are strong, specific, and often non-obvious — and AI or basic completions often get them wrong.
+Because in these frameworks, type expectations are strong, specific, and often non-obvious, and AI or basic completions often get them wrong.
 
 ## What This Plugin Does?
 
