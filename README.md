@@ -3,7 +3,11 @@ A Neovim plugin that provides context-aware Python type completions
 
 > Suggests relevant type annotations based on **parameter names**, **function names**, and **context** — no LSP required.
 
-✨ What It Does?
+## Why This Plugin?
+
+Most AI-powered auto-completion tools suggest generic or incorrect types. But your linter (e.g. Ruff, mypy, pyright) expects realistic, meaningful types
+
+## What This Plugin Does?
 
 Example:
 
