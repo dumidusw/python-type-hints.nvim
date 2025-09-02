@@ -7,6 +7,16 @@ A Neovim plugin that provides context-aware Python type completions
 
 Most AI-powered auto-completion tools suggest generic or incorrect types. But your linter (e.g. Ruff, mypy, pyright) expects realistic, meaningful types
 
+**This is especially useful when working with Python frameworks like:**
+
+- FastAPI / Django / Flask (web)
+- Pandas / Polars / Pydantic (data)
+- SQLAlchemy / Tortoise ORM (database)
+- Typer / Click (CLI)
+- Prefect / Celery (async workflows)
+
+Because in these frameworks, type expectations are strong, specific, and often non-obvious — and AI or basic completions often get them wrong.
+
 ## What This Plugin Does?
 
 Example:
