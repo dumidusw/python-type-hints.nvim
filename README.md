@@ -5,7 +5,7 @@ A Neovim plugin that provides context-aware Python type completions
 
 ✨ What It Does?
 
-Example
+Example:
 
 When you type:
 
@@ -150,6 +150,7 @@ PRs welcome! You can:
 - Suggest new snippets
 
 ## Demo
+![Smart Python Type Hints in Action](docs/demo.gif)
 
 ## Acknowledgements
 Inspired by real-world Python development workflows.
